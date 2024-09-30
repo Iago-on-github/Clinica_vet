@@ -22,8 +22,6 @@ public class Pet {
     @Reference
     @JsonIgnore
     private Owner owner;
-    @DBRef
-    private List<Visit> visits = new ArrayList<>();
 
     public Pet(){}
 
@@ -65,14 +63,6 @@ public class Pet {
 
     public void setOwner(Owner owner) {
         this.owner = owner;
-    }
-
-    public List<Visit> getVisits() {
-        return visits;
-    }
-
-    public void setVisits(List<Visit> visits) {
-        this.visits = visits;
     }
 
     public Race getRace() {

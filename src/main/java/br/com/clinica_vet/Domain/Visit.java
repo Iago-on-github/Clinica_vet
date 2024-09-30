@@ -4,21 +4,21 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Document
 public class Visit {
     @Id
     private String id;
-    private LocalDateTime visitDate;
+    private LocalDate visitDate;
     private String description;
     @DBRef
     private Pet pet;
 
     public Visit(){}
 
-    public Visit(String id, LocalDateTime visitDate, String description, Pet pet) {
+    public Visit(String id, LocalDate visitDate, String description, Pet pet) {
         this.id = id;
         this.visitDate = visitDate;
         this.description = description;
@@ -33,11 +33,11 @@ public class Visit {
         this.id = id;
     }
 
-    public LocalDateTime getVisitDate() {
+    public LocalDate getVisitDate() {
         return visitDate;
     }
 
-    public void setVisitDate(LocalDateTime visitDate) {
+    public void setVisitDate(LocalDate visitDate) {
         this.visitDate = visitDate;
     }
 

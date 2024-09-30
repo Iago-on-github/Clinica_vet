@@ -1,19 +1,29 @@
 package br.com.clinica_vet.Domain;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 public class User {
+    @Id
+    private String id;
     private String name;
     private String password;
-    private boolean enabled;
 
     public User(){}
 
-    public User(String name, String password, boolean enabled) {
+    public User(String id, String name, String password) {
+        this.id = id;
         this.name = name;
         this.password = password;
-        this.enabled = enabled;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -30,13 +40,5 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
     }
 }

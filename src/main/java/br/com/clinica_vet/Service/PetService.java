@@ -1,6 +1,5 @@
 package br.com.clinica_vet.Service;
 
-import br.com.clinica_vet.Domain.Dto.MapperStructDto.PetMapper;
 import br.com.clinica_vet.Domain.Dto.PetDto;
 import br.com.clinica_vet.Domain.Pet;
 import br.com.clinica_vet.Repositories.PetRepository;
@@ -15,9 +14,6 @@ import java.util.Optional;
 public class PetService {
     @Autowired
     private PetRepository petRepository;
-
-    @Autowired
-    private PetMapper petMapper;
 
     public List<Pet> findAll(){
         return petRepository.findAll();
@@ -45,14 +41,5 @@ public class PetService {
         pet.setName(petDto.name());
         pet.setBirthDate(petDto.birthDate());
         return pet;
-    }
-
-    //métodos para converter Dto para Entity e Entity para Dto
-    public PetDto convertToDto(Pet pet) {
-        return petMapper.INSTANCE.petToPetDto(pet);
-    }
-
-    public Pet convertToEntity(PetDto petDto){
-        return petMapper.petDtoToPet(petDto);
     }
 }

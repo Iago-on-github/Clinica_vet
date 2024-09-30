@@ -1,6 +1,5 @@
 package br.com.clinica_vet.Resources;
 
-import br.com.clinica_vet.Domain.Dto.MapperStructDto.PetMapper;
 import br.com.clinica_vet.Domain.Dto.PetDto;
 import br.com.clinica_vet.Domain.Pet;
 import br.com.clinica_vet.Service.PetService;
