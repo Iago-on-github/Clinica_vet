@@ -1,6 +1,5 @@
 package br.com.clinica_vet.Domain.Dto;
 
-public record UserDto(String id,
-                      String name,
+public record UserDto(String name,
                       String password) {
 }
