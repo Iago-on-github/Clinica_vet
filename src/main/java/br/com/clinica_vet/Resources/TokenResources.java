@@ -2,6 +2,7 @@ package br.com.clinica_vet.Resources;
 
 import br.com.clinica_vet.Domain.Dto.UserRequest;
 import br.com.clinica_vet.Domain.Dto.UserResponse;
+import br.com.clinica_vet.Domain.Role;
 import br.com.clinica_vet.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Instant;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/login")
@@ -40,11 +42,16 @@ public class TokenResources {
         var now = Instant.now();
         var expiresIn = 300L;
 
+        var scopes = user.get().getRoles().stream()
+                .map(Role::getName)
+                .collect(Collectors.joining(" "));
+
         var clamis = JwtClaimsSet.builder().
                 issuer("Vet Clinic Backend Team")
                 .subject(user.get().getId())
                 .issuedAt(now)
                 .expiresAt(now.plusSeconds(expiresIn))
+                .claim("scope", scopes)
                 .build();
 
         var jwtValue = jwtEncoder.encode(JwtEncoderParameters.from(clamis)).getTokenValue();

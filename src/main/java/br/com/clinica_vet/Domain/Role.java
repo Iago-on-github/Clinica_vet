@@ -1,9 +1,11 @@
 package br.com.clinica_vet.Domain;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 public class Role {
+    @Id
     private String id;
     private String name;
 
@@ -28,13 +30,13 @@ public class Role {
         this.name = name;
     }
 
-    public enum values{
+    public enum Values{
         ADMIN(1L),
         BASIC(2L);
 
         long code;
 
-        values(long code) {
+        Values(long code) {
             this.code = code;
         }
 

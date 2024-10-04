@@ -9,6 +9,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.util.Optional;
 import java.util.Set;
 
 @Configuration
@@ -25,18 +26,45 @@ public class AdminUserConfig implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        var role = roleRepository.findByName(Role.values.ADMIN.name());
+        initializeRoles();
+        InitializeRoleBasic();
+        
+        var role = roleRepository.findByName(Role.Values.ADMIN.name());
+        if (role == null) {
+            throw new IllegalStateException("Role not found");
+        }
+
         var userAdmin = userRepository.findByLogin("admin");
 
         userAdmin.ifPresentOrElse(
-                admin -> System.out.println("Admin already exists"),
+                user -> {
+                    System.out.println("Admin already exists");
+                },
                 () -> {
                     var user = new User();
                     user.setLogin("admin");
                     user.setPassword(bCryptPasswordEncoder.encode("123"));
-                    user.setRoles(Set.of(role));
+                    user.setRoles(Set.of(role)); // Agora garantido que 'role' não é nulo
                     userRepository.save(user);
+                    System.out.println("Admin user created successfully");
                 }
         );
+
+    }
+
+    private void initializeRoles() {
+        if (roleRepository.findByName(Role.Values.ADMIN.name()) == null) {
+            Role roleAdmin = new Role(null, Role.Values.ADMIN.name());
+            roleRepository.save(roleAdmin);
+            System.out.println("Role ADMIN created successfully");
+        }
+    }
+
+    private void InitializeRoleBasic(){
+        if (roleRepository.findByName(Role.Values.BASIC.name()) == null) {
+            Role roleBasic = new Role(null, Role.Values.BASIC.name());
+            roleRepository.save(roleBasic);
+            System.out.println("Role BASIC created successfully");
+        }
     }
 }
